@@ -1,16 +1,67 @@
 # PREDICT CUSTOMER CHURN IN A BANK
 
-# load necessary libraries
-
+import streamlit as st
 import pandas as pd
-import numpy as np
+import seaborn as sns
 import matplotlib.pyplot as plt
+import streamlit.components.v1 as components
+st.set_page_config(layout="wide", initial_sidebar_state="expanded", page_title='Deja Vu Stores Dashboard')
 
-matplotlib. pyplot. show()
+# load dataset
+churn = pd.read_csv('banking_churn.csv')
+data = churn.copy()
+
+# this is the main function in which we define our webpage
+def main():
+    # front end elements of the web page
+    html_temp = """ 
+    <div style ="background-color:brown;padding:13px"> 
+    <h1 style ="color:gray1;text-align:center;">Streamlit Bank Customer Churn Prediction MLApp</h1> 
+    </div> 
+    """
+
+    # display the front end aspect
+    st.markdown(html_temp, unsafe_allow_html=True)
+
+    # following lines create boxes in which user can enter data required to make prediction
+    Gender = st.selectbox("Customer's Gender", ("Male", "Female"))
+    Age = st.number_input("Customer's Age")
+    NumOfProducts = st.selectbox("Total Number of Bank Product The Customer Uses", ("1", "2", "3", "4"))
+    Tenure = st.selectbox("Number of Years The Customer Has Been a Client",
+                          ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"))
+    HasCrCard = st.selectbox('Does The Customer has a Credit Card?', ("Yes", "No"))
+    IsActiveMember = st.selectbox('Is The Customer an Active Member?', ("Yes", "No"))
+    EstimatedSalary = st.number_input("Estimated Salary of Customer")
+    Balance = st.number_input("Customer's Account Balance")
+    CreditScore = st.number_input("Customer's Credit Score")
+    Geography_France = st.selectbox('Is the Customer From France?', ("Yes", "No"))
+    Geography_Spain = st.selectbox('Is the Customer From Spain?', ("Yes", "No"))
+    Geography_Germany = st.selectbox('Is the Customer From Germany?', ("Yes", "No"))
+
+    result = ""
+
+    # when 'Predict' is clicked, make the prediction and store it
+    if st.button("Predict"):
+        result = prediction(CreditScore, Gender, Age, Tenure, Balance, NumOfProducts, HasCrCard, IsActiveMember,
+                            EstimatedSalary, Geography_France, Geography_Germany, Geography_Spain)
+        st.success('The Customer will {}'.format(result))
+        # print(LoanAmount)
+
+
+if __name__ == '__main__':
+    main()
+
+# load necessary libraries
+#
+#
+# import numpy as np
+#
+# import matplotlib.pyplot as plt
+
 
 import seaborn as sns
-from Tools.scripts.parseentities import writefile
 
+# import sklearn
 from sklearn.metrics import roc_auc_score
 from sklearn.metrics import plot_roc_curve
 from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
@@ -32,9 +83,6 @@ import os, sys
 import warnings
 warnings.filterwarnings('ignore')
 
-# load dataset
-churn = pd.read_csv('banking_churn.csv')
-data = churn.copy()
 
 # check size of the observation and variable
 data.shape
@@ -418,42 +466,42 @@ def prediction(CreditScore, Gender, Age, Tenure, Balance, NumOfProducts, HasCrCa
     return pred
 
 
-# this is the main function in which we define our webpage
-def main():
-    # front end elements of the web page
-    html_temp = """ 
-    <div style ="background-color:brown;padding:13px"> 
-    <h1 style ="color:gray1;text-align:center;">Streamlit Bank Customer Churn Prediction MLApp</h1> 
-    </div> 
-    """
-
-    # display the front end aspect
-    st.markdown(html_temp, unsafe_allow_html=True)
-
-    # following lines create boxes in which user can enter data required to make prediction
-    Gender = st.selectbox("Customer's Gender", ("Male", "Female"))
-    Age = st.number_input("Customer's Age")
-    NumOfProducts = st.selectbox("Total Number of Bank Product The Customer Uses", ("1", "2", "3", "4"))
-    Tenure = st.selectbox("Number of Years The Customer Has Been a Client",
-                          ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"))
-    HasCrCard = st.selectbox('Does The Customer has a Credit Card?', ("Yes", "No"))
-    IsActiveMember = st.selectbox('Is The Customer an Active Member?', ("Yes", "No"))
-    EstimatedSalary = st.number_input("Estimated Salary of Customer")
-    Balance = st.number_input("Customer's Account Balance")
-    CreditScore = st.number_input("Customer's Credit Score")
-    Geography_France = st.selectbox('Is the Customer From France?', ("Yes", "No"))
-    Geography_Spain = st.selectbox('Is the Customer From Spain?', ("Yes", "No"))
-    Geography_Germany = st.selectbox('Is the Customer From Germany?', ("Yes", "No"))
-
-    result = ""
-
-    # when 'Predict' is clicked, make the prediction and store it
-    if st.button("Predict"):
-        result = prediction(CreditScore, Gender, Age, Tenure, Balance, NumOfProducts, HasCrCard, IsActiveMember,
-                            EstimatedSalary, Geography_France, Geography_Germany, Geography_Spain)
-        st.success('The Customer will {}'.format(result))
-        # print(LoanAmount)
-
-
-if __name__ == '__main__':
-    main()
+# # this is the main function in which we define our webpage
+# def main():
+#     # front end elements of the web page
+#     html_temp = """
+#     <div style ="background-color:brown;padding:13px">
+#     <h1 style ="color:gray1;text-align:center;">Streamlit Bank Customer Churn Prediction MLApp</h1>
+#     </div>
+#     """
+#
+#     # display the front end aspect
+#     st.markdown(html_temp, unsafe_allow_html=True)
+#
+#     # following lines create boxes in which user can enter data required to make prediction
+#     Gender = st.selectbox("Customer's Gender", ("Male", "Female"))
+#     Age = st.number_input("Customer's Age")
+#     NumOfProducts = st.selectbox("Total Number of Bank Product The Customer Uses", ("1", "2", "3", "4"))
+#     Tenure = st.selectbox("Number of Years The Customer Has Been a Client",
+#                           ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"))
+#     HasCrCard = st.selectbox('Does The Customer has a Credit Card?', ("Yes", "No"))
+#     IsActiveMember = st.selectbox('Is The Customer an Active Member?', ("Yes", "No"))
+#     EstimatedSalary = st.number_input("Estimated Salary of Customer")
+#     Balance = st.number_input("Customer's Account Balance")
+#     CreditScore = st.number_input("Customer's Credit Score")
+#     Geography_France = st.selectbox('Is the Customer From France?', ("Yes", "No"))
+#     Geography_Spain = st.selectbox('Is the Customer From Spain?', ("Yes", "No"))
+#     Geography_Germany = st.selectbox('Is the Customer From Germany?', ("Yes", "No"))
+#
+#     result = ""
+#
+#     # when 'Predict' is clicked, make the prediction and store it
+#     if st.button("Predict"):
+#         result = prediction(CreditScore, Gender, Age, Tenure, Balance, NumOfProducts, HasCrCard, IsActiveMember,
+#                             EstimatedSalary, Geography_France, Geography_Germany, Geography_Spain)
+#         st.success('The Customer will {}'.format(result))
+#         # print(LoanAmount)
+#
+#
+# if __name__ == '__main__':
+#     main()
