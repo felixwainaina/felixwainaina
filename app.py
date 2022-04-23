@@ -103,8 +103,6 @@ def main():
 
 import numpy as np
 
-import matplotlib.pyplot as plt
-
 import seaborn as sns
 
 # import sklearn
@@ -146,6 +144,9 @@ data.columns
 stats = data.describe()
 stats
 # Analyzing target variable
+
+import matplotlib.pyplot as plt
+
 plt.figure(figsize=(15, 8))
 sns.countplot('Exited', data=data)
 # Analyzing how categorical data relates with the target variable (exited)
