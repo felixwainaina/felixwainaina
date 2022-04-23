@@ -1,6 +1,6 @@
 import pickle
 import streamlit as st
-import sklearn
+# import sklearn as sk
 # loading the trained model
 pickle_in = open('classifier.pkl', 'rb')
 
