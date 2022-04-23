@@ -2,14 +2,70 @@
 
 import streamlit as st
 import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
 import streamlit.components.v1 as components
-st.set_page_config(layout="wide", initial_sidebar_state="expanded", page_title='Deja Vu Stores Dashboard')
+
 
 # load dataset
 churn = pd.read_csv('banking_churn.csv')
 data = churn.copy()
+
+
+import pickle
+import streamlit as st
+
+# loading the trained model
+pickle_in = open('classifier.pkl', 'rb')
+classifier = pickle.load(pickle_in)
+
+
+@st.cache()
+
+# defining the function which will make the prediction using the data which the user inputs
+def prediction(CreditScore, Gender, Age, Tenure, Balance, NumOfProducts, HasCrCard, IsActiveMember, EstimatedSalary,
+               Geography_France, Geography_Germany, Geography_Spain):
+    # Pre-processing user input
+    if Gender == "Male":
+        Gender = 0
+    else:
+        Gender = 1
+
+    if HasCrCard == "No":
+        HasCrCard = 0
+    else:
+        HasCrCard = 1
+
+    if IsActiveMember == "No":
+        IsActiveMember = 0
+    else:
+        IsActiveMember = 1
+
+    if Geography_France == "Yes":
+        Geography_France = 1
+    else:
+        Geography_France = 0
+
+    if Geography_Spain == "Yes":
+        Geography_Spain = 1
+    else:
+        Geography_Spain = 0
+
+    if Geography_Germany == "Yes":
+        Geography_Germany = 1
+    else:
+        Geography_Germany = 0
+
+    # Making predictions
+    prediction = classifier.predict(
+        [[CreditScore, Gender, Age, Tenure, Balance, NumOfProducts, HasCrCard, IsActiveMember, EstimatedSalary,
+          Geography_France, Geography_Germany, Geography_Spain]])
+
+    if prediction == 0:
+        pred = 'Stay!'
+    else:
+        pred = 'Leave!'
+    return pred
+
+
 
 # this is the main function in which we define our webpage
 def main():
@@ -52,11 +108,10 @@ if __name__ == '__main__':
     main()
 
 # load necessary libraries
-#
-#
-# import numpy as np
-#
-# import matplotlib.pyplot as plt
+
+import numpy as np
+
+import matplotlib.pyplot as plt
 
 
 import seaborn as sns
@@ -411,60 +466,51 @@ pickle_out.close()
 data_cleaned.head()
 
 
-import pickle
-import streamlit as st
-
-# loading the trained model
-pickle_in = open('classifier.pkl', 'rb')
-classifier = pickle.load(pickle_in)
-
-
-@st.cache()
-# defining the function which will make the prediction using the data which the user inputs
-def prediction(CreditScore, Gender, Age, Tenure, Balance, NumOfProducts, HasCrCard, IsActiveMember, EstimatedSalary,
-               Geography_France, Geography_Germany, Geography_Spain):
-    # Pre-processing user input
-    if Gender == "Male":
-        Gender = 0
-    else:
-        Gender = 1
-
-    if HasCrCard == "No":
-        HasCrCard = 0
-    else:
-        HasCrCard = 1
-
-    if IsActiveMember == "No":
-        IsActiveMember = 0
-    else:
-        IsActiveMember = 1
-
-    if Geography_France == "Yes":
-        Geography_France = 1
-    else:
-        Geography_France = 0
-
-    if Geography_Spain == "Yes":
-        Geography_Spain = 1
-    else:
-        Geography_Spain = 0
-
-    if Geography_Germany == "Yes":
-        Geography_Germany = 1
-    else:
-        Geography_Germany = 0
-
-    # Making predictions
-    prediction = classifier.predict(
-        [[CreditScore, Gender, Age, Tenure, Balance, NumOfProducts, HasCrCard, IsActiveMember, EstimatedSalary,
-          Geography_France, Geography_Germany, Geography_Spain]])
-
-    if prediction == 0:
-        pred = 'Stay!'
-    else:
-        pred = 'Leave!'
-    return pred
-
+## # defining the function which will make the prediction using the data which the user inputs
+# def prediction(CreditScore, Gender, Age, Tenure, Balance, NumOfProducts, HasCrCard, IsActiveMember, EstimatedSalary,
+#                Geography_France, Geography_Germany, Geography_Spain):
+#     # Pre-processing user input
+#     if Gender == "Male":
+#         Gender = 0
+#     else:
+#         Gender = 1
+#
+#     if HasCrCard == "No":
+#         HasCrCard = 0
+#     else:
+#         HasCrCard = 1
+#
+#     if IsActiveMember == "No":
+#         IsActiveMember = 0
+#     else:
+#         IsActiveMember = 1
+#
+#     if Geography_France == "Yes":
+#         Geography_France = 1
+#     else:
+#         Geography_France = 0
+#
+#     if Geography_Spain == "Yes":
+#         Geography_Spain = 1
+#     else:
+#         Geography_Spain = 0
+#
+#     if Geography_Germany == "Yes":
+#         Geography_Germany = 1
+#     else:
+#         Geography_Germany = 0
+#
+#     # Making predictions
+#     prediction = classifier.predict(
+#         [[CreditScore, Gender, Age, Tenure, Balance, NumOfProducts, HasCrCard, IsActiveMember, EstimatedSalary,
+#           Geography_France, Geography_Germany, Geography_Spain]])
+#
+#     if prediction == 0:
+#         pred = 'Stay!'
+#     else:
+#         pred = 'Leave!'
+#     return pred
+#
 
 # # this is the main function in which we define our webpage
 # def main():
