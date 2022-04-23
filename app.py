@@ -1,9 +1,12 @@
 # PREDICT CUSTOMER CHURN IN A BANK
 
 # load necessary libraries
+import matplotlib
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+
+matplotlib. pyplot. show()
 
 import seaborn as sns
 from Tools.scripts.parseentities import writefile
