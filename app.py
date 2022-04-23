@@ -12,11 +12,6 @@ import pickle
 import streamlit as st
 
 
-# loading the trained model
-pickle_in = open('classifier.pkl', 'rb')
-classifier = pickle.load(pickle_in)
-
-
 @st.cache()
 # defining the function which will make the prediction using the data which the user inputs
 def prediction(CreditScore, Gender, Age, Tenure, Balance, NumOfProducts, HasCrCard, IsActiveMember, EstimatedSalary,
@@ -455,12 +450,12 @@ plt.show()
 # Deployment
 # saving the model
 import pickle
-#
-# pickle_out = open("classifier.pkl", mode="wb")
-# pickle.dump(rand, pickle_out)
-# pickle_out.close()
-#
-# data_cleaned.head()
+
+pickle_out = open("classifier.pkl", mode="wb")
+pickle.dump(rand, pickle_out)
+pickle_out.close()
+
+data_cleaned.head()
 
 # loading the trained model
 pickle_in = open('classifier.pkl', 'rb')
