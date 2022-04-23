@@ -2,8 +2,6 @@
 
 import streamlit as st
 import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
 import streamlit.components.v1 as components
 st.set_page_config(layout="wide", initial_sidebar_state="expanded", page_title='Deja Vu Stores Dashboard')
 
@@ -52,11 +50,10 @@ if __name__ == '__main__':
     main()
 
 # load necessary libraries
-#
-#
-# import numpy as np
-#
-# import matplotlib.pyplot as plt
+
+import numpy as np
+
+import matplotlib.pyplot as plt
 
 
 import seaborn as sns
