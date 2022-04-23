@@ -12,9 +12,9 @@ import pickle
 import streamlit as st
 
 
-# # loading the trained model
-# pickle_in = open('classifier.pkl', 'rb')
-# classifier = pickle.load(pickle_in)
+# loading the trained model
+pickle_in = open('classifier.pkl', 'rb')
+classifier = pickle.load(pickle_in)
 
 
 @st.cache()
@@ -466,6 +466,6 @@ import pickle
 pickle_in = open('classifier.pkl', 'rb')
 classifier = pickle.load(pickle_in)
 
-
-if __name__ == '__main__':
-    main()
+#
+# if __name__ == '__main__':
+#     main()
