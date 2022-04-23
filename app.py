@@ -10,6 +10,7 @@ data = churn.copy()
 
 import pickle
 import streamlit as st
+import sklearn
 
 
 # loading the trained model
