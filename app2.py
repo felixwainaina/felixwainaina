@@ -4,7 +4,7 @@ import streamlit as st
 # loading the trained model
 pickle_in = open('classifier.pkl', 'rb')
 
-classifier = pickle.load(pickle_in)
+# classifier = pickle.load(pickle_in)
 
 
 @st.cache()
@@ -43,6 +43,8 @@ def prediction(CreditScore, Gender, Age, Tenure, Balance, NumOfProducts, HasCrCa
         Geography_Germany = 0
 
     # Making predictions
+
+    classifier = pickle.load(pickle_in)
     prediction = classifier.predict(
         [[CreditScore, Gender, Age, Tenure, Balance, NumOfProducts, HasCrCard, IsActiveMember, EstimatedSalary,
           Geography_France, Geography_Germany, Geography_Spain]])
