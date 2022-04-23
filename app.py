@@ -1,7 +1,7 @@
 # PREDICT CUSTOMER CHURN IN A BANK
 
 # load necessary libraries
-import matplotlib
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
